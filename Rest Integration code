@@ -1,0 +1,27 @@
+@RestResource(urlMapping='/AccountService/*')
+Global class RestServiceTest {
+    
+    
+    @httpPost
+    global static string dopost(string accName, string Phone){
+        Account acc = new Account();
+       acc.Name = accName;
+        acc.Phone=Phone;
+        insert acc;
+        
+        return'Post method called successfully'+Acc.Id; 
+    }
+    
+       @httpGet
+    global static List<account> doGet(){
+        
+        RestRequest request = RestContext.request;
+        
+        string AccId=request.requestURI.substring(request.requestURI.lastindexOf('/')+1);
+        system.debug('====accId===='+accId);
+        list<account> lstAccs= [select id,name,phone from account where id=:accId];
+        return lstAccs;
+        
+        }
+    }
+
